@@ -1,23 +1,5 @@
 {
-            "id": "sliverkiss_sjxzs",
-            "name": "声荐小助手",
-            "author": "@Sliverkiss",
-            "repo": "",
-            "icons": [
-                "https://raw.githubusercontent.com/Sliverkiss/QuantumultX/main/icon/sjxzs.png",
-                "https://raw.githubusercontent.com/Sliverkiss/QuantumultX/main/icon/sjxzs.png"
-            ],
-            "keys": [
-                "sjxzs_data"
-            ],
-            "settings": [
-                {
-                    "id": "sjxzs_data",
-                    "name": "会员数据",
-                    "val": "",
-                    "type": "textarea",
-                    "autoGrow": true,
-                    "desc": ""
-                }
-            ]
-        }
+  "name": "测试订阅",
+  "version": "1.0.0",
+  "script": "https://your-script-url.js"
+}
