@@ -1,38 +1,30 @@
 {
-  "name": "ExampleScript",
-  "author": "YourName",
+  "id": "example-script",
+  "name": "示例脚本",
+  "author": "Your Name",
   "version": "1.0.0",
-  "description": "This is an example BoxJs script configuration.",
-  "rules": [
+  "description": "这是一个 BoxJs 示例脚本配置文件。",
+  "keys": [
     {
-      "key": "example_variable",
-      "type": "string",
-      "default": "default_value",
-      "description": "This is an example variable."
-    },
-    {
-      "key": "example_number",
-      "type": "number",
-      "default": 10,
-      "description": "This is an example number variable."
-    },
-    {
-      "key": "example_boolean",
-      "type": "boolean",
-      "default": false,
-      "description": "This is an example boolean variable."
+      "key": "example_key",
+      "remark": "示例配置项",
+      "default": "default_value"
     }
   ],
-  "rewrite": [
+  "settings": [
     {
-      "regex": "^https://example\\.com/api/.*$",
-      "target": "https://api.example-proxy.com/"
+      "id": "example_setting",
+      "label": "示例设置",
+      "type": "text",
+      "default": "default_text"
     }
   ],
-  "MITM": {
-    "hostname": [
-      "example.com",
-      "api.example.com"
-    ]
-  }
+  "scripts": [
+    {
+      "name": "示例脚本",
+      "url": "https://example.com/script.js",
+      "cron": "0 0 * * *",
+      "type": "application/javascript"
+    }
+  ]
 }
