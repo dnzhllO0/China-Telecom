@@ -1,26 +1,27 @@
 {
-  "name": "电信自动金豆兑换话费",
-  "author": "YourName",
-  "script": "http://your_script_url.js",
-  "icon": "https://your_icon_url.png",
-  "version": "1.0.0",
-  "desc": "自动将中国电信金豆兑换为话费",
   "settings": [
     {
-      "name": "cookie",
+      "name": "example_key",
       "type": "text",
       "default": "",
-      "desc": "填写从电信 App 获取的 Cookie"
+      "desc": "示例的键值"
     },
     {
-      "name": "minGold",
-      "type": "number",
-      "default": 1000,
-      "desc": "最小金豆数量（单位：个）"
+      "name": "example_switch",
+      "type": "boolean",
+      "default": false,
+      "desc": "示例的开关"
     }
   ],
   "task": {
     "cron": "0 0 8 * * *",
-    "desc": "每天早上8点运行"
-  }
+    "desc": "每天早上 8 点运行示例任务"
+  },
+  "script": [
+    {
+      "name": "示例脚本",
+      "url": "https://raw.githubusercontent.com/your_username/your_repo/main/example.js",
+      "desc": "这是一个示例脚本"
+    }
+  ]
 }
