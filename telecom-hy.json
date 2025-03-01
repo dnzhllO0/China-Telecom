@@ -9,7 +9,7 @@
             
   "name": "测试订阅",
   "version": "1.0.0",
-  "script": "https://your-script-url.js"
+  "script": "https://raw.githubusercontent.com/Sliverkiss/GoodNight/refs/heads/master/Script/qlSync.js"
 
 
         }
