@@ -1,40 +1,38 @@
 {
-            "id": "sliverkiss_ltyd",
-            "name": "力天阅读",
-            "author": "@sliverkiss",
-            "repo": "",
-            "icons": [
-                "https://raw.githubusercontent.com/fmz200/wool_scripts/main/icons/apps/Category_Weather.png",
-                "https://raw.githubusercontent.com/fmz200/wool_scripts/main/icons/apps/Category_Weather.png"
-            ],
-            "keys": [
-                "ltyd_user",
-                "ltyd_data",
-                "ltyd_wallet"
-            ],
-            "settings": [
-                {
-                    "id": "ltyd_wallet",
-                    "name": "开启自动提现",
-                    "val": true,
-                    "type": "boolean",
-                    "desc": "默认开启"
-                },
-                {
-                    "id": "ltyd_user",
-                    "name": "当前获取ck用户",
-                    "val": "",
-                    "type": "textarea",
-                    "autoGrow": true,
-                    "desc": "根据填写的备注，获取ck将自动更新该用户"
-                },
-                {
-                    "id": "ltyd_data",
-                    "name": "会员Cookie数据",
-                    "val": "",
-                    "type": "textarea",
-                    "autoGrow": true,
-                    "desc": "会员Cookie数据"
-                }
-            ]
-        }
+  "name": "ExampleScript",
+  "author": "YourName",
+  "version": "1.0.0",
+  "description": "This is an example BoxJs script configuration.",
+  "rules": [
+    {
+      "key": "example_variable",
+      "type": "string",
+      "default": "default_value",
+      "description": "This is an example variable."
+    },
+    {
+      "key": "example_number",
+      "type": "number",
+      "default": 10,
+      "description": "This is an example number variable."
+    },
+    {
+      "key": "example_boolean",
+      "type": "boolean",
+      "default": false,
+      "description": "This is an example boolean variable."
+    }
+  ],
+  "rewrite": [
+    {
+      "regex": "^https://example\\.com/api/.*$",
+      "target": "https://api.example-proxy.com/"
+    }
+  ],
+  "MITM": {
+    "hostname": [
+      "example.com",
+      "api.example.com"
+    ]
+  }
+}
