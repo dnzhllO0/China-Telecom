@@ -1,10 +1,4 @@
 {
-	"id": "dnzd.sub",
-	"name": "签到脚本订阅",
-	"author": "dnzd",
-	"icon": "https://github.com/dnzhllO0/China-Telecom/blob/6141b0403a4ff4c1085acb12ef49e68541521395/icon/sakura.png",
-	"repo": "",
-	"apps": {
 		"id": "sliverkiss_surge",
 		"name": "Surge通用重放模块",
 		"author": "@Sliverkiss",
@@ -30,5 +24,3 @@
 			"desc": "填入需要运行重放模块的ckName"
 		}]
 	}
-
-}
