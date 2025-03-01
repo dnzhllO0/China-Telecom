@@ -1,86 +1,167 @@
+// ================ Shadowrocket 脚本 ================
 /*
-电信自动金豆兑换话费脚本
-适用于 BoxJs 和 Shadowrocket
+脚本名称: 电信金豆自动兑换话费
+作者: @YourName
+支持版本: Shadowrocket
+使用说明: 配合BoxJS使用，需要配置手机号和服务密码
+
+[Script]
+电信金豆自动兑换话费 = type=cron,cronexp=0 10 * * *,script-path=telecom_auto_points.js,timeout=60,wake-system=1
+
+[MITM]
+hostname = wapside.189.cn:*
 */
 
-// 定义任务信息
-const taskName = "电信金豆兑话费";
-const loginUrl = "https://login.189.cn/web/login";
-const redeemUrl = "https://www.189.cn/integral/redeem";
+const $ = new Env('电信金豆自动兑换话费');
+const notify = $.isNode() ? require('./sendNotify') : '';
 
-// 用户登录信息（需要从 BoxJs 中获取）
-const username = $persistentStore.read("ctcc_username") || ""; // 用户名
-const password = $persistentStore.read("ctcc_password") || ""; // 密码
+// 配置信息
+const phone = $.getdata('telecom_phone') || '';
+const password = $.getdata('telecom_password') || '';
+const exchangeThreshold = parseInt($.getdata('exchange_threshold')) || 1000;
+const notificationSwitch = $.getdata('notification_switch') !== 'false';
 
-// 定义兑换金额（可以通过 BoxJs 设置）
-const redeemAmount = $persistentStore.read("redeem_amount") || 10; // 默认兑换 10 元
+let token = '';
+let retryCount = 0;
+const maxRetries = 3;
 
-(async () => {
-  if (!username || !password) {
-    console.log(`${taskName}: 用户名或密码未设置，请检查 BoxJs 设置`);
-    $notify(taskName, "失败", "未配置用户名或密码，请检查设置");
-    $done();
-  }
-
-  try {
-    // 登录流程
-    const loginResponse = await login(username, password);
-    if (!loginResponse || loginResponse.status !== 200) {
-      console.log(`${taskName}: 登录失败`);
-      $notify(taskName, "登录失败", "请检查用户名或密码是否正确");
-      $done();
+!(async () => {
+    if (!phone || !password) {
+        $.msg($.name, '❌ 错误', '手机号和密码不能为空');
+        return;
     }
-
-    console.log(`${taskName}: 登录成功，开始兑换金豆`);
     
-    // 执行兑换
-    const redeemResponse = await redeemGold(redeemAmount);
-    if (redeemResponse && redeemResponse.status === 200) {
-      console.log(`${taskName}: 兑换成功，兑换金额为 ${redeemAmount} 元`);
-      $notify(taskName, "兑换成功", `已成功兑换 ${redeemAmount} 元话费`);
-    } else {
-      console.log(`${taskName}: 兑换失败`);
-      $notify(taskName, "兑换失败", `请检查兑换规则或金豆余额`);
+    try {
+        // 登录获取token
+        await loginWithRetry();
+        
+        // 查询金豆数量
+        const pointsResult = await queryPoints();
+        $.log(`当前金豆数量: ${pointsResult.points}`);
+        
+        if (pointsResult.points >= exchangeThreshold) {
+            // 执行兑换话费
+            const exchangeResult = await exchangePoints(pointsResult.points);
+            const message = `兑换成功\n金豆数量: ${pointsResult.points}\n兑换金额: ${exchangeResult.amount/100}元`;
+            
+            if (notificationSwitch) {
+                $.msg($.name, '✅ 兑换成功', message);
+            }
+            $.log(message);
+        } else {
+            const message = `当前金豆(${pointsResult.points})未达到兑换阈值(${exchangeThreshold})`;
+            if (notificationSwitch) {
+                $.msg($.name, '⚠️ 未达兑换标准', message);
+            }
+            $.log(message);
+        }
+    } catch (e) {
+        const message = `执行失败: ${e.message || e}`;
+        $.log('', `❌ ${$.name}, 失败! 原因: ${message}`, '');
+        if (notificationSwitch) {
+            $.msg($.name, '❌ 执行失败', message);
+        }
     }
-  } catch (error) {
-    console.log(`${taskName}: 出现错误 - ${error.message}`);
-    $notify(taskName, "任务失败", `错误详情: ${error.message}`);
-  }
-  $done();
-})();
+})()
+.catch((e) => $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, ''))
+.finally(() => $.done());
 
-// 登录函数
-async function login(username, password) {
-  const options = {
-    url: loginUrl,
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ username, password }),
-  };
-  return await httpRequest(options);
+async function loginWithRetry() {
+    while (retryCount < maxRetries) {
+        try {
+            await login();
+            return;
+        } catch (e) {
+            retryCount++;
+            if (retryCount === maxRetries) throw e;
+            await $.wait(2000);
+        }
+    }
 }
 
-// 兑换金豆函数
-async function redeemGold(amount) {
-  const options = {
-    url: redeemUrl,
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ amount }),
-  };
-  return await httpRequest(options);
+function login() {
+    return new Promise((resolve, reject) => {
+        const options = {
+            url: 'https://wapside.189.cn:9001/login/auth',
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X)',
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                phoneNum: phone,
+                servicePassword: password
+            })
+        }
+        
+        $.post(options, (err, resp, data) => {
+            try {
+                if (err) throw err;
+                const result = JSON.parse(data);
+                if (result.code === 0) {
+                    token = result.data.token;
+                    resolve();
+                } else {
+                    throw new Error(result.msg || '登录失败');
+                }
+            } catch (e) {
+                reject(e);
+            }
+        })
+    })
 }
 
-// HTTP 请求封装
-function httpRequest(options) {
-  return new Promise((resolve, reject) => {
-    $task.fetch(options).then(
-      (response) => resolve(response),
-      (error) => reject(error)
-    );
-  });
+function queryPoints() {
+    return new Promise((resolve, reject) => {
+        const options = {
+            url: 'https://wapside.189.cn:9001/points/query',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X)'
+            }
+        }
+        $.get(options, (err, resp, data) => {
+            try {
+                if (err) throw err;
+                const result = JSON.parse(data);
+                if (result.code === 0) {
+                    resolve({ points: result.data.points });
+                } else {
+                    throw new Error(result.msg || '查询失败');
+                }
+            } catch (e) {
+                reject(e);
+            }
+        })
+    })
 }
+
+function exchangePoints(points) {
+    return new Promise((resolve, reject) => {
+        const options = {
+            url: 'https://wapside.189.cn:9001/points/exchange/charge',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X)',
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                points: points,
+                phone: phone
+            })
+        }
+        $.post(options, (err, resp, data) => {
+            try {
+                if (err) throw err;
+                const result = JSON.parse(data);
+                if (result.code === 0) {
+                    resolve({ amount: points });
+                } else {
+                    throw new Error(result.msg || '兑换失败');
+                }
+            } catch (e) {
+                reject(e);
+            }
+        })
+    })
+}
+        
