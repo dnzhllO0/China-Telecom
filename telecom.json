@@ -1,15 +1,15 @@
 {
     "id": "telecom.points.auto.exchange",
-    "name": "电信金豆自动兑换话费",
+    "name": "电信金豆自动签到兑换话费",
     "author": "@YourName",
     "icon": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/10000.png",
     "repo": "https://github.com/yourusername/script",
     "apps": [
         {
             "id": "telecomAutoPoints",
-            "name": "电信金豆自动兑换话费",
-            "desc": "每日自动查询并兑换电信金豆为话费",
-            "keys": ["telecom_phone", "telecom_password", "exchange_threshold", "notification_switch", "auto_exchange_time"],
+            "name": "电信金豆自动签到兑换话费",
+            "desc": "每日自动签到并兑换电信金豆为话费",
+            "keys": ["telecom_phone", "telecom_password", "exchange_threshold", "notification_switch", "auto_exchange_time", "auto_sign_time"],
             "settings": [
                 {
                     "id": "telecom_phone",
@@ -33,6 +33,13 @@
                     "desc": "金豆兑换最低数量(建议1000起)"
                 },
                 {
+                    "id": "auto_sign_time",
+                    "name": "自动签到时间",
+                    "val": "7:30",
+                    "type": "time",
+                    "desc": "每日自动签到时间"
+                },
+                {
                     "id": "auto_exchange_time",
                     "name": "自动兑换时间",
                     "val": "10:00",
@@ -54,4 +61,4 @@
         }
     ]
 }
- 
+  
