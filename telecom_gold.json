@@ -1,27 +1,19 @@
 {
-  "settings": [
+  "name": "My Custom BoxJS Subscription",
+  "version": "1.0.0",
+  "author": "YourName",
+  "scripts": [
     {
-      "name": "example_key",
-      "type": "text",
-      "default": "",
-      "desc": "示例的键值"
+      "name": "电信金豆兑换",
+      "url": "https://raw.githubusercontent.com/YourRepo/YourProject/main/telecom_gold_exchange.js",
+      "icon": "https://example.com/icon.png",
+      "desc": "自动将中国电信金豆兑换成话费"
     },
     {
-      "name": "example_switch",
-      "type": "boolean",
-      "default": false,
-      "desc": "示例的开关"
-    }
-  ],
-  "task": {
-    "cron": "0 0 8 * * *",
-    "desc": "每天早上 8 点运行示例任务"
-  },
-  "script": [
-    {
-      "name": "示例脚本",
-      "url": "https://raw.githubusercontent.com/your_username/your_repo/main/example.js",
-      "desc": "这是一个示例脚本"
+      "name": "其他脚本",
+      "url": "https://raw.githubusercontent.com/YourRepo/YourProject/main/other_script.js",
+      "icon": "https://example.com/icon2.png",
+      "desc": "其他脚本描述"
     }
   ]
 }
