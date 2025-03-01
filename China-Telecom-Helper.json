@@ -1,12 +1,31 @@
 {
-  "settings": {
-    "telecom_jindou": {
-      "name": "电信金豆兑换",
-      "options": {
-        "username": "请输入电信账号",
-        "password": "请输入电信密码",
-        "exchangeAmount": "兑换金额，例如：10"
-      }
+  "id": "telecom_gold",
+  "name": "电信金豆兑话费",
+  "keys": [
+    {
+      "key": "telecom_username",
+      "type": "text",
+      "label": "电信账号",
+      "default": ""
+    },
+    {
+      "key": "telecom_password",
+      "type": "text",
+      "label": "电信密码",
+      "default": "",
+      "inputType": "password"
+    },
+    {
+      "key": "exchange_threshold",
+      "type": "number",
+      "label": "最低兑换门槛",
+      "default": 100
+    },
+    {
+      "key": "notify",
+      "type": "boolean",
+      "label": "兑换成功是否通知",
+      "default": true
     }
-  }
+  ]
 }
