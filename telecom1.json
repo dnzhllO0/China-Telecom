@@ -6,7 +6,36 @@
     "repo": "",
     "apps": [
         {
-            
+            {
+            "id": "sliverkiss_surge",
+            "name": "Surge通用重放模块",
+            "author": "@Sliverkiss",
+            "repo": "",
+            "icons": [
+                "https://raw.githubusercontent.com/githubdulong/Script/master/Images/Surge_logo.png",
+                "https://raw.githubusercontent.com/githubdulong/Script/master/Images/Surge_logo.png"
+            ],
+            "keys": [
+                "sliverkiss_surge_retry",
+                "@sliverkiss.record"
+            ],
+            "scripts": [
+                {
+                    "name": "手动执行(填写ckName，保存，执行)",
+                    "script": "https://raw.githubusercontent.com/Sliverkiss/GoodNight/refs/heads/master/Script/surgeRecord.js"
+                }
+            ],
+            "settings": [
+                {
+                    "id": "sliverkiss_surge_retry",
+                    "name": "ckName",
+                    "val": "",
+                    "type": "text",
+                    "autoGrow": true,
+                    "desc": "填入需要运行重放模块的ckName"
+                }
+            ]
+        }
         }
     ]
 }
