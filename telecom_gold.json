@@ -1,31 +1,26 @@
 {
-  "id": "telecom_gold",
-  "name": "电信金豆兑话费",
-  "keys": [
+  "name": "电信自动金豆兑换话费",
+  "author": "YourName",
+  "script": "http://your_script_url.js",
+  "icon": "https://your_icon_url.png",
+  "version": "1.0.0",
+  "desc": "自动将中国电信金豆兑换为话费",
+  "settings": [
     {
-      "key": "telecom_username",
+      "name": "cookie",
       "type": "text",
-      "label": "电信账号",
-      "default": ""
-    },
-    {
-      "key": "telecom_password",
-      "type": "text",
-      "label": "电信密码",
       "default": "",
-      "inputType": "password"
+      "desc": "填写从电信 App 获取的 Cookie"
     },
     {
-      "key": "exchange_threshold",
+      "name": "minGold",
       "type": "number",
-      "label": "最低兑换门槛",
-      "default": 100
-    },
-    {
-      "key": "notify",
-      "type": "boolean",
-      "label": "兑换成功是否通知",
-      "default": true
+      "default": 1000,
+      "desc": "最小金豆数量（单位：个）"
     }
-  ]
+  ],
+  "task": {
+    "cron": "0 0 8 * * *",
+    "desc": "每天早上8点运行"
+  }
 }
