@@ -1,35 +1,57 @@
 {
-    "id": "example.app.sub",
-    "name": "示例订阅",
-    "author": "@Example",
-    "icon": "https://example.com/icon.png",
-    "repo": "https://github.com/example/example",
+    "id": "telecom.points.auto.exchange",
+    "name": "电信金豆自动兑换话费",
+    "author": "@YourName",
+    "icon": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/10000.png",
+    "repo": "https://github.com/yourusername/script",
     "apps": [
         {
-            "id": "exampleApp",
-            "name": "ExampleApp",
-            "desc": "示例应用",
-            "keys": ["key1", "key2"],
-            "author": "@Example",
-            "repo": "https://github.com/example/example",
+            "id": "telecomAutoPoints",
+            "name": "电信金豆自动兑换话费",
+            "desc": "每日自动查询并兑换电信金豆为话费",
+            "keys": ["telecom_phone", "telecom_password", "exchange_threshold", "notification_switch", "auto_exchange_time"],
             "settings": [
                 {
-                    "id": "setting1",
-                    "name": "设置1",
-                    "val": false,
-                    "type": "boolean",
-                    "desc": "设置1的描述"
-                },
-                {
-                    "id": "setting2",
-                    "name": "设置2",
+                    "id": "telecom_phone",
+                    "name": "手机号",
                     "val": "",
                     "type": "text",
-                    "desc": "设置2的描述",
-                    "placeholder": "请输入文本"
+                    "desc": "电信手机号码"
+                },
+                {
+                    "id": "telecom_password",
+                    "name": "服务密码",
+                    "val": "",
+                    "type": "text",
+                    "desc": "电信服务密码"
+                },
+                {
+                    "id": "exchange_threshold",
+                    "name": "兑换阈值",
+                    "val": "1000",
+                    "type": "number",
+                    "desc": "金豆兑换最低数量(建议1000起)"
+                },
+                {
+                    "id": "auto_exchange_time",
+                    "name": "自动兑换时间",
+                    "val": "10:00",
+                    "type": "time",
+                    "desc": "每日自动兑换时间"
+                },
+                {
+                    "id": "notification_switch",
+                    "name": "通知开关",
+                    "val": true,
+                    "type": "boolean",
+                    "desc": "是否开启通知提醒"
                 }
             ],
-            "icons": ["https://example.com/icon.png", "https://example.com/icon-dark.png"]
+            "author": "@YourName",
+            "repo": "https://github.com/yourusername/script",
+            "icons": ["https://raw.githubusercontent.com/Orz-3/mini/master/10000.png",
+                     "https://raw.githubusercontent.com/Orz-3/mini/master/Color/10000.png"]
         }
     ]
 }
+ 
