@@ -1,19 +1,23 @@
 {
-  "name": "My Custom BoxJS Subscription",
-  "version": "1.0.0",
-  "author": "YourName",
-  "scripts": [
-    {
-      "name": "电信金豆兑换",
-      "url": "https://raw.githubusercontent.com/YourRepo/YourProject/main/telecom_gold_exchange.js",
-      "icon": "https://example.com/icon.png",
-      "desc": "自动将中国电信金豆兑换成话费"
-    },
-    {
-      "name": "其他脚本",
-      "url": "https://raw.githubusercontent.com/YourRepo/YourProject/main/other_script.js",
-      "icon": "https://example.com/icon2.png",
-      "desc": "其他脚本描述"
-    }
-  ]
-}
+            "id": "sliverkiss_sjxzs",
+            "name": "声荐小助手",
+            "author": "@Sliverkiss",
+            "repo": "",
+            "icons": [
+                "https://raw.githubusercontent.com/Sliverkiss/QuantumultX/main/icon/sjxzs.png",
+                "https://raw.githubusercontent.com/Sliverkiss/QuantumultX/main/icon/sjxzs.png"
+            ],
+            "keys": [
+                "sjxzs_data"
+            ],
+            "settings": [
+                {
+                    "id": "sjxzs_data",
+                    "name": "会员数据",
+                    "val": "",
+                    "type": "textarea",
+                    "autoGrow": true,
+                    "desc": ""
+                }
+            ]
+        }
