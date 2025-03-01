@@ -1,0 +1,12 @@
+{
+  "settings": {
+    "telecom_jindou": {
+      "name": "电信金豆兑换",
+      "options": {
+        "username": "请输入电信账号",
+        "password": "请输入电信密码",
+        "exchangeAmount": "兑换金额，例如：10"
+      }
+    }
+  }
+}
