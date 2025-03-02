@@ -1,1 +1,30 @@
+#!name=YouTube Web AdBlock
+#!desc=Block YouTube Web Ads in ShadowRocket
+#!category=Streaming
 
+[URL Rewrite]
+# Block YouTube web ads
+^https?://[w-]+.googlevideo.com/ptracking - reject-200
+^https?://[w-]+.googlevideo.com/videogoodput - reject-200
+^https?://[w-]+.googlevideo.com/.+&(oad|ctier=L) - reject-200
+
+# Block YouTube ads in feed and home page
+^https?://youtubei.googleapis.com/youtubei/.+ad_ - reject-200
+^https?://www.youtube.com/pcs/activeview - reject-200
+^https?://www.youtube.com/pagead/ - reject-200
+^https?://www.youtube.com/api/stats/ads - reject-200
+
+[MITM]
+hostname = *.googlevideo.com, youtubei.googleapis.com, www.youtube.com, m.youtube.com, s.youtube.com
+
+[Script]
+youtube-player = type=http-response,pattern=^https?://youtubei.googleapis.com/youtubei/v1/player,requires-body=1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/youtube-player.js
+youtube-fake = type=http-response,pattern=^https?://[w-]+.googlevideo.com/initplayback.+&oad,requires-body=0,script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/youtube-fake.js
+
+[Rule]
+# Block YouTube Ads
+URL-REGEX,^https?://[w-]+.googlevideo.com/(?!(dclk_video_ads|videoplayback?)).+&oad,REJECT-TINYGIF
+URL-REGEX,^https?://youtubei.googleapis.com/youtubei/v1/player/ad_break,REJECT
+URL-REGEX,^https?://(www|s).youtube.com/(pagead|ptracking),REJECT
+URL-REGEX,^https?://s.youtube.com/api/stats/qoe?adcontext,REJECT
+URL-REGEX,^https?://api.catch.gift/api/v3/pagead/,REJECT
